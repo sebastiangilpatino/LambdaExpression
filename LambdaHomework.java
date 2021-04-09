@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class LambdaHomework {
 
@@ -142,6 +143,38 @@ public class LambdaHomework {
 		System.out.println("\nCreate an infinite stream of even numbers and then, eventually"
 				+ "\nprint out only the first 20 even numbers from this stream.  ");
 		IntStream.iterate(0, i -> i + 2).limit(20).forEach(x -> System.out.print(x + " "));
+		System.out.println(" ");
+
+		/*
+		 * 10) which counts the number of words in the input list words that have length
+		 * equal to len, that contain the character c, and that do not contain the
+		 * character d
+		 */
+		System.out.println("\nImplement  a method with the following signature and return type");
+		List<String> words = Arrays.asList("sebas", "maria", "naem", "milton", "jora");
+		char c = 'a', d = 'm';
+		int len = 4;
+		System.out.println(countWords(words, c, d, len));
+
+		/*
+		 * 11)
+		 */
+		System.out.println("\nodd numbers starting in 9");
+		IntStream.iterate(9, i -> i + 2).limit(4).forEach(x -> System.out.print(x + " "));
+
+		/*
+		 * 12)
+		 */
+		System.out.println("\n\nUse reduce to concatenate the Strings in the Stream below");
+		Stream<String> strings = Stream.of("A", "good", "day", "to", "write", "some", "Java");
+		System.out.println(strings.reduce((x, y) -> x.concat(y + " ")).get());
+
+	}
+
+	public static int countWords(List<String> words, char c, char d, int len) {
+		return (int) words.stream()
+				.filter(s -> s.length() == len && s.contains(String.valueOf(c)) && !s.contains(String.valueOf(d)))
+				.count();
 	}
 
 }
