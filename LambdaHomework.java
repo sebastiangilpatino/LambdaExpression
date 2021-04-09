@@ -1,8 +1,11 @@
 package LmbdaHW;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -168,6 +171,30 @@ public class LambdaHomework {
 		System.out.println("\n\nUse reduce to concatenate the Strings in the Stream below");
 		Stream<String> strings = Stream.of("A", "good", "day", "to", "write", "some", "Java");
 		System.out.println(strings.reduce((x, y) -> x.concat(y + " ")).get());
+
+		/*
+		 * 13)
+		 */
+
+		List<ExamData> data = new ArrayList<ExamData>();
+		data.add(new ExamData("George", 91.3));
+		data.add(new ExamData("Tom", 88.9));
+		data.add(new ExamData("Rick", 80));
+		data.add(new ExamData("Harold", 90.8));
+		data.add(new ExamData("Ignatius", 60.9));
+		data.add(new ExamData("Anna", 77));
+		data.add(new ExamData("Susan", 87.3));
+		data.add(new ExamData("Phil", 99.1));
+		data.add(new ExamData("Alex", 84));
+
+		Comparator<ExamData> comparingScore = Comparator.comparing(ExamData::getTestScore);
+		// Optional<ExamData> optionExam =
+		// Optional.of(data.stream().max(comparingScore).get());
+		Optional<Double> maxScore = data.stream().map(e -> e.getTestScore()).max(Double::compareTo);
+		Optional<Double> lowScore = data.stream().map(e -> e.getTestScore()).min(Double::compareTo);
+		OptionalDouble avgScore = data.stream().mapToDouble(e -> e.getTestScore()).average();
+
+		System.out.println("\nMax score was " + maxScore + " Min score was " + lowScore + " Average " + avgScore);
 
 	}
 
