@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -177,6 +175,7 @@ public class LambdaHomework {
 		 */
 
 		List<ExamData> data = new ArrayList<ExamData>();
+
 		data.add(new ExamData("George", 91.3));
 		data.add(new ExamData("Tom", 88.9));
 		data.add(new ExamData("Rick", 80));
@@ -187,14 +186,16 @@ public class LambdaHomework {
 		data.add(new ExamData("Phil", 99.1));
 		data.add(new ExamData("Alex", 84));
 
-		Comparator<ExamData> comparingScore = Comparator.comparing(ExamData::getTestScore);
-		// Optional<ExamData> optionExam =
-		// Optional.of(data.stream().max(comparingScore).get());
-		Optional<Double> maxScore = data.stream().map(e -> e.getTestScore()).max(Double::compareTo);
-		Optional<Double> lowScore = data.stream().map(e -> e.getTestScore()).min(Double::compareTo);
-		OptionalDouble avgScore = data.stream().mapToDouble(e -> e.getTestScore()).average();
+		Double maxScore = data.stream().map(e -> e.getTestScore()).max(Double::compareTo).orElse(null);
+		Double lowScore = data.stream().map(e -> e.getTestScore()).min(Double::compareTo).orElse(null);
+		Double avgScore = data.stream().mapToDouble(e -> e.getTestScore()).average().orElseGet(null);
 
-		System.out.println("\nMax score was " + maxScore + " Min score was " + lowScore + " Average " + avgScore);
+		System.out.printf("\nMax score was %.2f, Min score was %.2f, Average was %.2f", maxScore, lowScore, avgScore);
+
+		System.out.println(
+				"\n\nThe First one is: " + data.stream().map(ExamData::getStudentName).findFirst().orElse(null));
+
+		System.out.println("\nAnyone: " + data.stream().map(ExamData::getStudentName).findAny().orElse(null));
 
 	}
 
